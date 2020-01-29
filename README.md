@@ -4,4 +4,4 @@ This is the outcome of the meetings from Jan. 29th and Jan. 30th. It defines use
 
 ## User Stories
 
-- [1. do x](1_do_x)
+- [Release Brackets](release_brackets/) As a user, I want to queue services in staging and finally release them together (even in a canary-way)

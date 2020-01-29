@@ -2,8 +2,15 @@ version: 0.1.0
 type: Uniform
 spec:
   services:
+  - name: gitops-service
+    image: keptn/configuration-serive:0.6.0
+    actions:
+      - new-artifact
+      - add-resource
+
+
   # helm-service for everything but production
-  - name: helm-service
+  - name: delivery-service
     image: keptn/helm-service:0.6.0
     actions:
       - deploy_direct
@@ -12,10 +19,9 @@ spec:
       - "stage != 'production'"
   
   # helm-service for production
-  - name: helm-service-prod
+  - name: delivery-service-prod
     image: keptn/helm-service:0.6.0
     actions:
-      - deploy_direct
       - deploy_blue_green
     filter:
       - "stage == 'production'"
