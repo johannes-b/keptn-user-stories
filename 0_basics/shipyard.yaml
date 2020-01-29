@@ -1,0 +1,49 @@
+version: 0.1.0
+type: shipyard
+spec:
+  stages:
+    - name: "dev"
+      actions:
+        configuration_change:
+          - deploy_direct
+          - functional_tests
+          - special_tests
+          - evaluation
+          - release         # = direct deployment, do nothing
+          - promote         # go to next stage
+
+    # dummy testing stage that is never released and never public
+    - name: "dummy_testing"
+      actions:
+        configuration_change:
+          - deploy_direct
+          - security_tests
+          - evaluation
+          - promote          # exec next stage
+
+    - name: "staging"
+      actions:
+        configuration-change:
+          - deploy_blue_green
+          - functional_tests
+          - performance_tests
+          - my_perf_tests
+          - evaluation
+          - release          # = traffic shift to new deployment
+          - manual_approval
+          - promote   # ask if next stage should be exec.
+
+    - name: "production"
+      actions:
+        configuration-change:
+          - deploy_blue_green
+          - functional_tests # = test new deployment
+          - evaluation       # evaluate tests
+          - manual_approval  
+          - release          # = traffic shift to new deployment
+          - evaluate_release
+
+        problem-open:
+          - remediate
+          - real_user_tests
+          - evaluate_release
