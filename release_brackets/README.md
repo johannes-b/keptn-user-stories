@@ -2,8 +2,6 @@
 
 As a user, I want to queue services in staging and finally release them together (even in a canary-way)
 
-
-
 ## User Facing
 
 **Example Project Structure**: foobar-frontend <--> foobar-backend <--> foobar-db (direct)
@@ -30,6 +28,7 @@ keptn send new-artifact --project=foo
 
 - pod1: foobar-frontend:1.2.0
 - pod2: foobar-backend:1.2.0
+- pod3: foobar-db:1.2.0
 
 
 **New Artifact is sent**:
@@ -50,8 +49,9 @@ keptn send new-artifact --project=foo
 during:
 - pod1 [blue]: foobar-frontend:1.2.0
 - pod2 [blue]: foobar-backend:1.2.0
-- pod3 [green]: foobar-frontend:1.2.3
-- pod4 [green]: foobar-backend:1.2.3
+- pod3: foobar-db:1.2.0 (unchanged)
+- pod4 [green]: foobar-frontend:1.2.3
+- pod5 [green]: foobar-backend:1.2.3
 
 **Deployment Finished event**:
 
@@ -75,5 +75,8 @@ during:
 During tests only green services can communicate with each other.
 
 release:
-- pod3 [green]: foobar-frontend:1.2.3
-- pod4 [green]: foobar-backend:1.2.3
+- pod1: terminated
+- pod2: terminated
+- pod3: foobar-db:1.2.0 (unchanged)
+- pod4: foobar-frontend:1.2.3
+- pod5: foobar-backend:1.2.3
