@@ -1,0 +1,12 @@
+remediations:
+  - name: "Response time degradation"
+    actions:
+    - action: scaling
+      value: +1
+    - action: restart_pods
+      value: all
+    - action: rollback
+  - name: "Failure rate increase"
+    actions:
+    - action: featuretoggle
+      value: EnablePromotion:off

@@ -9,17 +9,14 @@ spec:
           - functional_tests
           - evaluation
           - release         # = direct deployment, do nothing
-          - promote
-          
+
     - name: "hardening"
       actions:
         configuration-change:
           - deploy_blue_green
-          - functional_tests
           - performance_tests
           - evaluation
           - release          # = traffic shift to new deployment
-          - manual_approval
           - promote   # ask if next stage should be exec.
 
     - name: "production"
@@ -29,10 +26,17 @@ spec:
           - functional_tests # = test new deployment
           - evaluation       # evaluate tests
           - manual_approval  
-          - release          # = traffic shift to new deployment
-          - evaluate_release
+          - release_canary:   # = traffic shift to new deployment 
+            - actions:  
+                release_canary.progressed:
+                - real_user_tests
+                - evaluate_release
 
         problem-open:
-          - remediate
-          - real_user_tests
-          - evaluate_release
+          - remedation:
+            - actions:
+                remedation.progressed:
+                - real_user_tests
+                - evaluate_problem_closed
+                - evaluate_remedation
+          - escalate
