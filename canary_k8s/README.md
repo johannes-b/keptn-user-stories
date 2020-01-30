@@ -1,17 +1,55 @@
-# Release Brackets
+# Canary
 
-As a user, I want to do a canary release on K8s
+## User view
 
-## User Facing
 
-**Example Project Structure**: foobar-frontend <--> foobar-backend <--> foobar-db (direct)
+### Initial situation
 
-### Releasing a new version of foobar-frontend
 
-```console
-keptn send new-artifact --project=foo --service=foobar-frontend --artifact foobar-frontend:1.2.3
-```
+### Domain events: Problem occured in Production
 
-- [Shipyard](../0_basics/shipyard.yaml)
-- [Uniform](../0_basics/uniform.yaml)
+
+### Desired outcome
+
+
+## Event stream
+
+### Production stage:
+
+*Event stream triggered by Configuration change for production:* 
+- configuration-change.triggered
+  - deploy_blue_green.triggered 
+    - deploy_blue_green.started 
+    - deploy_blue_green.finished
+  - functional_tests.triggered
+    - functional_tests.started
+    - functional_tests.finished
+  - evaluation.triggered
+    - evaluation.started  
+    - evaluation.finished
+  - manual_approval.triggered
+    - manual_approval.started
+    - manual_approval.finished
+  - release_canary.triggered
+    - release_canary.started    
+    - release_canary.progressed # set 10% of traffic to canary
+  - real_user_tests.triggered
+    - real_user_tests.started
+    - real_user_tests.finished
+  - evaluate_release.triggered
+    - evaluate_release.started
+    - evaluate_release.finished
+  - release_canary.retriggerd
+    - release_canary.progressed # set 20% of traffic to canary
+  - real_user_tests.triggered
+    - real_user_tests.started
+    - real_user_tests.finished
+  - evaluate_release.triggered
+    - evaluate_release.started
+    - evaluate_release.finished 
+  - release_canary.retriggerd
+    - release_canary.finished
+- configuration-change.done
+
+---
 
