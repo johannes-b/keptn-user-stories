@@ -9,17 +9,14 @@ spec:
           - functional_tests
           - evaluation
           - release         # = direct deployment, do nothing
-          - promote
-          
+
     - name: "hardening"
       actions:
         configuration-change:
           - deploy_blue_green
-          - functional_tests
           - performance_tests
           - evaluation
           - release          # = traffic shift to new deployment
-          - manual_approval
           - promote   # ask if next stage should be exec.
 
     - name: "production"
