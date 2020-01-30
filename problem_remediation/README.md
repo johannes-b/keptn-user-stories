@@ -15,61 +15,52 @@ As a user, I want to define a custom remediation workflow with multiple actions.
 *Stage:*
 - dev: Is out of scope for this user (Alice). 
 - hardening: Is out of scope for this user (Alice). 
-- production: Alic is responsible for production
+- production: Alice is responsible for this stage and has therefore defined remedation actions. 
 
 *Shipyard:* (compared to default)
 - ...
 
-### Domain events: 
+*Remedation actions*
 
 
-</p>
-</details>
+### Domain events: Problem occured in Production
+
+*Domain event source:* Monitoring solution (e.g., Dynatrace)
+
+
 
 ### Desired outcome
 
-Both, Tim and Tom, expect that their service is deployed in *dev*. Afterwards, both would like to promote their artifacts together to *hardening*. Once all end-2-end tests in hardening have passed, they should be automatically promoted to production.
 
 ## Event stream
 
 ### Production stage:
 
-*Event stream triggered by Tom:* 
-- configuration-change.triggered
-  - deploy_direct.triggered 
-    - deploy_direct.started 
-    - deploy_direct.finished
-  - functional_tests.triggered
-    - functional_tests.started
-    - functional_tests.finished
-  - evaluation.triggered
-    - evaluation.started
-    - evaluation.finished
-  - release.triggered
-    - release.started
-    - release.finished
-- configuration-change.finished
-
-### Hardening stage
-
-*Event stream triggered by Tom & Tim:*
-- configuration-change.triggered
-  - deploy_blue_green.triggered 
-    - deploy_blue_green.started 
-    - deploy_blue_green.finished
-  - performance_tests.triggered
-    - performance_tests.started
-    - performance_tests.finished
-  - evaluation.triggered
-    - evaluation.started
-    - evaluation.finished
-  - release.triggered
-    - release.started
-    - release.finished
-  - promote.triggered
-    - promote.started
-    - promote.finished
-- configuration-change.finished
+*Event stream triggered by Domain event source (Dynatrace):* 
+- problem-open.triggered
+  - remedation.triggered 
+    - remedation.started 
+    - remedation.progressed     # Execute 1st action
+  - real_user_tests.triggered
+    - real_user_tests.started
+    - real_user_tests.finished
+  - evaluate_remedation.triggered
+    - evaluate_remedation.started  
+    - evaluate_release.finished
+  - remedation.retriggered
+    - remedation.progressed     # Execute 2nd action
+  - real_user_tests.triggered
+    - real_user_tests.started
+    - real_user_tests.finished
+  - evaluate_remedation.triggered
+    - evaluate_remedation.started  
+    - evaluate_release.finished
+  - remedation.retriggered
+    - remedation.finished
+  - escalate.triggerred
+    - escalate.started
+    - escalate.finished
+- problem-open.finished
 
 ---
 

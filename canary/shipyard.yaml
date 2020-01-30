@@ -31,12 +31,3 @@ spec:
                 release_canary.progressed:
                 - real_user_tests
                 - evaluate_release
-
-        problem-open:
-          - remedation:
-            - actions:
-                remedation.progressed:
-                - real_user_tests
-                - evaluate_problem_closed
-                - evaluate_remedation
-          - escalate

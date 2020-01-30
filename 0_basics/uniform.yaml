@@ -8,7 +8,6 @@ spec:
       - new-artifact
       - add-resource
 
-
   # helm-service for everything but production
   - name: delivery-service
     image: keptn/helm-service:0.6.0
@@ -35,17 +34,6 @@ spec:
     actions:
       - security_tests
     external: true
-    hooks:
-      web:
-        https://something.com/security/?token=1234
-
-  - name: some-docker-container
-    actions:
-      - special_tests
-    external: true
-    hooks:
-      docker:
-        docker.io/myusername/myimage:1.2.3
 
   - name: jmeter-service
     image: keptn/jmeter-service:0.6.0
@@ -86,9 +74,26 @@ spec:
     actions:
       - __ALL__
 
-
   - name: lighthouse-service
     image: keptn/lighthouse-service
     actions:
       - evaluation
       - evaluate_release
+      - evaluate_remedation
+
+  - name: remediation-service
+    image: keptn/remediation-service
+    actions:
+      - remedation
+
+  - name: wait-service
+    image: keptn/wait-service
+    actions:
+      - real_user_tests
+
+  - name: dynatrace-service
+    image: keptn/dynatrace-service
+    actions:
+      - evaluate_problem_closed
+
+  
