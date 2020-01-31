@@ -4,9 +4,9 @@ As a user, I want to queue services in staging and finally release them together
 
 ## User view
 
-*Tim:* I'm a developer and responsible for building the backend service of a the app *foo*. I'm indivually testing my service in a *dev* environment to investigate bugfixes and new features. 
+:man: *Tim:* I'm a developer and responsible for building the backend service of a the app *foo*. I'm indivually testing my service in a *dev* environment to investigate bugfixes and new features. 
 
-*Tom:* I'm a developer and responsible for building the frontend service of a the app *foo*. I'm indivually testing my service in a *dev* environment to investigate bugfixes and new features. 
+:person_with_blond_hair: *Tom:* I'm a developer and responsible for building the frontend service of a the app *foo*. I'm indivually testing my service in a *dev* environment to investigate bugfixes and new features. 
 
 *Tim & Tom*: For an end-2-end performance test, which is conducted in *hardening* stage, we need to deploy the two services as a couple, followed by a performance test for the couple. 
 
