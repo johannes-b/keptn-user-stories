@@ -6,9 +6,9 @@ As a user, I want to provide a Docker image which is used for tests/remediations
 
 ## User view
 
-*Arnold*: I'm a DevOps engineer and I want to use a webhook to notify an external service prior to a promote event within configuration-change for every stage.
+:man: *Arnold*: I'm a DevOps engineer and I want to use a webhook to notify an external service prior to a promote event within configuration-change for every stage.
 
-*Sue*: I'm an acceptance engineer and I want my tests which are executed in a Docker image to be executed as part of a configuration-change in the hardening stage.
+:blonde_woman: *Sue*: I'm an acceptance engineer and I want my tests which are executed in a Docker image to be executed as part of a configuration-change in the hardening stage.
 
 ### Initial situation
 
@@ -30,7 +30,6 @@ keptn register hook --project=sockshop --service=carts --stage=hardening
    --action=test docker.io/myusername/my-test-image:1.5.77
 ```
 
-
 **At some later point: Anyone triggers a configuration-change**
 
 I want to release my new version of the carts service: 
@@ -42,11 +41,9 @@ keptn trigger configuration-change --project=sockshop
 
 ### Desired outcome
 
-Arnold wants the webhook to receive the `test` action/event (including payload of the event).
-If the webhook responds with http status code `2xx` the tests have successfully finished, else they have failed.
+Arnold wants the webhook to receive the `test` action/event (including payload of the event). If the webhook responds with http status code `2xx` the tests have successfully finished, else they have failed.
 
-Sue wants her tests to be executed, e.g., `docker run docker.io/myusername/my-test-image:1.5.77`. 
-If the container exits with `0` the tests have successfully finished, else they have failed.
+Sue wants her tests to be executed, e.g., `docker run docker.io/myusername/my-test-image:1.5.77`. If the container exits with `0` the tests have successfully finished, else they have failed.
 
 ## Event stream
 
@@ -81,7 +78,7 @@ If the container exits with `0` the tests have successfully finished, else they 
     - deploy_blue_green.finished
   - functional_tests.triggered
     - functional_tests.started
-      - triggers ``docker run docker.io/myusername/my-test-image:1.5.77``, waits for it to exit (e.g., max 30 minutes)
+      - **Container triggered** ``docker run docker.io/myusername/my-test-image:1.5.77``, waits for it to exit (e.g., max 30 minutes)
     - functional_tests.finished
   - performance_tests.triggered
     - performance_tests.started
