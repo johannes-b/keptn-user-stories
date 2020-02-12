@@ -1,6 +1,6 @@
 # Add custom services to Keptn
 
-As a user, I want to extend my Keptn installation with additional (custom) services
+As a user, I want to extend my Keptn installation with additional (custom) services.
 
 ## User view
 
@@ -17,7 +17,6 @@ As a user, I want to extend my Keptn installation with additional (custom) servi
 ## Event stream
 
 ### Dev stage:
-
 
 
 ### Hardening stage
