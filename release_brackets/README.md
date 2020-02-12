@@ -4,9 +4,9 @@ As a user, I want to queue services in staging and finally release them together
 
 ## User view
 
-:man: *Tim:* I'm a developer and responsible for building the backend service of a the app *foo*. I'm indivually testing my service in a *dev* environment to investigate bugfixes and new features. 
+:man: *Tim:* I'm a developer and responsible for building the backend service of the app *foo*. I'm individually testing my service in a *dev* environment to investigate bugfixes and new features. 
 
-:person_with_blond_hair: *Tom:* I'm a developer and responsible for building the frontend service of a the app *foo*. I'm indivually testing my service in a *dev* environment to investigate bugfixes and new features. 
+:person_with_blond_hair: *Tom:* I'm a developer and responsible for building the frontend service of the app *foo*. I'm individually testing my service in a *dev* environment to investigate bugfixes and new features. 
 
 *Tim & Tom*: For an end-2-end performance test, which is conducted in *hardening* stage, we need to deploy the two services as a couple, followed by a performance test for the couple. 
 
@@ -19,7 +19,7 @@ As a user, I want to queue services in staging and finally release them together
 *Stage:*
 - dev: For functionals test and bug investigation
 - hardening: For performance tests of a set of microservices
-- production: Is out of scope for these user (Tim & Tom). Does not matter, just needs to work.
+- production: Is out of scope for these users (Tim & Tom). Does not matter, just needs to work.
 
 *Shipyard:* (compared to default)
 - Dev stage has no promote action (Tim and Tom send a configuration-change for the next stage manually)

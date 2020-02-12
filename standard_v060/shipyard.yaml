@@ -1,0 +1,44 @@
+version: 0.1.0
+type: shipyard
+spec:
+  stages:
+    - name: "dev"
+      actions:
+        configuration-change:
+          - deployment:
+              strategy: direct
+          - test:
+              kind: functional
+          - evaluation
+          - release         
+          
+    - name: "hardening"
+      actions:
+        configuration-change:
+          - deployment:
+              strategy: blue_green
+          - test:
+              kind: functional
+          - test:
+              kind: performance
+          - evaluation
+          - release          
+
+    - name: "production"
+      actions:
+        configuration-change:
+          - deployment:
+              strategy: blue_green
+          - test:
+              kind: functional 
+          - evaluation       
+          - approval:
+              pass: automatic
+              warning: manual  
+          - release         
+
+        problem-open:
+          - remediation
+          - test:
+              kind: real_user 
+          - evaluation

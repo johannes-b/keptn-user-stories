@@ -1,10 +1,12 @@
 # Standard Keptn 0.6.0 User Story
 
-This use story shows the standard flow as implemented in Keptn 0.6.0.
+*Last update: 12.02.2020*
+
+This use story shows the standard flow as implemented in Keptn 0.6.0, but based on the new shipyard and uniform specification.
 
 ## User view
 
--
+:man: *Tim:* I'm a developer and responsible for building the frontend service of the app *carts*. I'm individually testing my service in a *dev* environment to investigate bugfixes and new features. After successful tests, a new version of a service should be automatically promoted to the hardening stage. 
 
 ### Initial situation
 
@@ -12,86 +14,94 @@ No specific setup, normal project setup (e.g., carts and carts-db) with a normal
 
 ### Domain events
 
-**Arnold adds a webhook for promote**
-
-```console
-keptn register hook --project=sockshop --service=carts [--stage=*] 
-   --action=promote https://some-host.com/hook/me/up/
-```
-
-**Sue adds a docker image for tests in hardening stage**
-
-```console
-keptn register hook --project=sockshop --service=carts --stage=hardening 
-   --action=test docker.io/myusername/my-test-image:1.5.77
-```
-
-**At some later point: Anyone triggers a configuration-change**
-
-I want to release my new version of the carts service: 
+Tim, I want to release my new version of the carts service: 
 ```console
 keptn trigger configuration-change --project=sockshop
   --service=carts
-  --artifact carts:0.10.3
+  --artifact carts:0.10.1
 ```
 
 ### Desired outcome
 
-Arnold wants the webhook to receive the `test` action/event (including payload of the event). If the webhook responds with http status code `2xx` the tests have successfully finished, else they have failed.
-
-Sue wants her tests to be executed, e.g., `docker run docker.io/myusername/my-test-image:1.5.77`. If the container exits with `0` the tests have successfully finished, else they have failed.
+Tim expects that his service is deployed in *dev* and functional tests are executed. After the test execution, a quality validation is conducted. If the quality validation returns a good result, the new artifact gets deployed in a blue/gree manner into the *hardening* stage where performance tests are executed. If the quality validation in hardening returns a good result, the new version gets promoted into *produciton*. 
 
 ## Event stream
 
-### Dev stage:
+### CD in Dev stage
 
-*Event stream triggered by any Dev:* 
+*Event stream triggered by Tim:* 
+
 - configuration-change.triggered
-  - deploy_direct.triggered # shipyard controller
-    - deploy_direct.started # Keptn service
-    - deploy_direct.finished
-  - functional_tests.triggered
-    - functional_tests.started
-    - functional_tests.finished
+  - deployment.triggered 
+    - deployment.started
+    - deployment.finished
+  - test.triggered
+    - test.started
+    - test.finished
   - evaluation.triggered
     - evaluation.started
     - evaluation.finished
   - release.triggered
     - release.started
     - release.finished
-  - promote.triggered
-    - promote.started
-      - **Webhook fired** https://some-host.com/hook/me/up/ - responds with HTTP Status 200
-    - promote.finished
 - configuration-change.finished
 
-### Hardening stage
+### CD in Hardening stage
 
 *Event stream continued due to promote action in dev:* 
+
 - configuration-change.triggered
-  - deploy_blue_green.triggered 
-    - deploy_blue_green.started 
-    - deploy_blue_green.finished
-  - functional_tests.triggered
-    - functional_tests.started
-      - **Container triggered** ``docker run docker.io/myusername/my-test-image:1.5.77``, waits for it to exit (e.g., max 30 minutes)
-    - functional_tests.finished
-  - performance_tests.triggered
-    - performance_tests.started
-    - performance_tests.finished
+  - deployment.triggered 
+    - deployment.started 
+    - deployment.finished
+  - test.triggered
+    - test.started
+    - test.finished
+  - test.triggered
+    - test.started
+    - test.finished
   - evaluation.triggered
     - evaluation.started
     - evaluation.finished
   - release.triggered
     - release.started
     - release.finished
-  - promote.triggered
-    - promote.started
-      - **Webhook fired** https://some-host.com/hook/me/up/ - responds with HTTP Status 200
-    - promote.finished
 - configuration-change.finished
 
+### CD in Production stage
 
-### Production stage
+*Event stream continued due to promote action in hardening:* 
 
-the usual workflow (there is no `promote` action available).
+- configuration-change.triggered
+  - deployment.triggered 
+    - deployment.started 
+    - deployment.finished
+  - test.triggered
+    - test.started
+    - test.finished
+  - evaluation.triggered
+    - evaluation.started
+    - evaluation.finished
+  - approval.triggered
+    - approval.started
+    - approval.finished
+  - release.triggered
+    - release.started
+    - release.finished
+- configuration-change.finished
+
+### Problem detected
+
+*Event triggered by problem in production:* 
+
+- problem-open.triggered
+  - remediation.triggered 
+    - remediation.started 
+    - remediation.finished
+  - test.triggered
+    - test.started
+    - test.finished
+  - evaluation.triggered
+    - evaluation.started
+    - evaluation.finished
+- problem-open.finished

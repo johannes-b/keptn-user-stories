@@ -1,0 +1,51 @@
+version: 0.1.0
+type: Uniform
+spec:
+  services:
+  - name: delivery-service
+    image: keptn/helm-service:0.6.0
+    actions:
+      - deployment
+    selector:
+      matchExpressions:
+        - {key: strategy, operator: In, values: [direct, blue_green]}
+        
+  - name: jmeter-service
+    image: keptn/jmeter-service:0.6.0 
+    actions:
+      - test
+    selector:
+      matchExpressions:
+        - {key: kind, operator: In, values: [functional, performance]}
+
+  - name: lighthouse-service
+    image: keptn/lighthouse-service:0.6.0
+    actions:
+      - evaluation
+
+  - name: promote-service
+    image: keptn/gatekeeper-service:0.6.0
+    actions:
+      - release
+
+  - name: approval-service
+    image: keptn/notification-service:0.1.4
+    actions:
+      - approval
+    selector:
+      matchLabels:
+        pass: automatic
+        warning: manual
+
+  - name: remedation-service
+    image: keptn/remedation-service:0.6.0
+    actions:
+      - remediation
+    
+  - name: wait-service
+    image: keptn/wait-service:0.6.0 
+    actions:
+      - test
+    selector:
+      matchExpressions:
+        - {key: kind, operator: In, values: [real_user]} 

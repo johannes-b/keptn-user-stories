@@ -1,10 +1,20 @@
 # Keptn User Stories
 
-This is the outcome of the meetings from Jan. 29th and Jan. 30th. It defines user stories and the shipyard/uniform/... files that are required for this.
+This repository defines user stories for Keptn. For the user stories a shipyard/uniform describe the Keptn installation. Based on that, the following personas want executed their tasks:
 
-## User Stories
+:man: *Tim:* Developer
+
+:person_with_blond_hair: *Tom:* Developer
+
+:man: *Arnold*: DevOps engineer
+
+:blonde_woman: *Sue*: Acceptance engineer
+
+## Categorization of User Stories
 
 <img src="_images/overview.png" width="50%"/>
+
+## User Stories
 
 **Standard Keptn 0.6.0 Scenario**
 

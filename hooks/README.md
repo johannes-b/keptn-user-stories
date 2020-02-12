@@ -1,8 +1,8 @@
 # Hooks
 
-As a user, I want to register a webhook for a Keptn project, stage, service and action
+As a user, I want to register a webhook for a Keptn project, stage, service and action.
 
-As a user, I want to provide a Docker image which is used for tests/remediations​
+As a user, I want to provide a Docker image which is used for tests/remediations​.
 
 ## User view
 
@@ -16,21 +16,21 @@ No specific setup, normal project setup (e.g., carts and carts-db) with a normal
 
 ### Domain events
 
-**Arnold adds a webhook for promote**
+**1.) Arnold adds a webhook for promote**
 
 ```console
 keptn register hook --project=sockshop --service=carts [--stage=*] 
    --action=promote https://some-host.com/hook/me/up/
 ```
 
-**Sue adds a docker image for tests in hardening stage**
+**2.) Sue adds a docker image for tests in hardening stage**
 
 ```console
 keptn register hook --project=sockshop --service=carts --stage=hardening 
    --action=test docker.io/myusername/my-test-image:1.5.77
 ```
 
-**At some later point: Anyone triggers a configuration-change**
+**3.) At some later point: Anyone triggers a configuration-change**
 
 I want to release my new version of the carts service: 
 ```console
