@@ -40,6 +40,8 @@ This repository defines user stories for Keptn. For the user stories a shipyard/
 
 - As a user, I want to get a notification for a problem including data from multiple sources. 
 
+- [Disable Self-healing](disable_self_healing/): As a user, I want to disable self-healing for a certain time period. 
+
 ### Platform - Execution Plane:
 
 - As a user, I want to deploy my artifacts on different target systems (multiple clusters, AWS Lambda, …) using blue/green, primary/canary, etc.

@@ -1,5 +1,7 @@
 # Canary
 
+*Last update of shipyard and uniform: 31.01.2020*
+
 ## User view
 
 

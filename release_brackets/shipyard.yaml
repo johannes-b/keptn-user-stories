@@ -1,5 +1,5 @@
 version: 0.1.0
-type: shipyard
+type: Shipyard
 spec:
   stages:
     - name: "dev"

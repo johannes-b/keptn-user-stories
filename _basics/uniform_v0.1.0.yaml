@@ -1,0 +1,97 @@
+version: 0.1.0
+type: Uniform
+spec:
+  services:
+  - name: gitops-service
+    image: keptn/configuration-serive:0.6.0
+    actions:
+      - new-artifact
+      - add-resource
+
+  # helm-service for everything but production
+  - name: delivery-service
+    image: keptn/helm-service:0.6.0
+    actions:
+      - deploy_direct
+      - deploy_blue_green
+    filter:
+      - "stage != 'production'"
+  
+  # helm-service for production
+  - name: delivery-service-prod
+    image: keptn/helm-service:0.6.0
+    actions:
+      - deploy_blue_green
+    filter:
+      - "stage == 'production'"
+    
+  - name: promote-service
+    image: keptn/promote-service:0.6.0
+    actions:
+      - promote
+    
+  - name: external-security-service
+    actions:
+      - security_tests
+    external: true
+
+  - name: jmeter-service
+    image: keptn/jmeter-service:0.6.0
+    # required_data:
+    #  - uri_to_test      
+    actions:
+      - functional_tests
+      - performance_tests
+
+  # keptn update uniform performance_tests+=neoload
+  - name: neoload-service
+    image: keptn/neoload-service:0.6.0
+    # required_data:
+    #  - uri_to_test  
+    actions:
+      - performance_tests
+
+  # keptn update uniform my_perf_tests+=keptn/neoload-service:0.6.1
+  - name: neoload-service2
+    image: keptn/neoload-service:0.6.1
+    actions:
+      - my_perf_tests
+
+  - name: slack-trail
+    image: keptn/slack-service:0.1.2
+    env:
+    - name: SLACK_WEBHOOK
+      value: "https://hooks.slack.com/services/TXXXXXXXX/BXXXXXXX/WXXXXXXXXXXXXXXXXX"
+    confirms: false # indicates that the service is not critical, and does
+                    # send a .done event back
+    actions:
+      - __ALL__
+
+  - name: mongodb-datastore
+    image: keptn/mongodb-service
+    confirms: false # indicates that the service is not critical, and does
+                    # send a .done event back
+    actions:
+      - __ALL__
+
+  - name: lighthouse-service
+    image: keptn/lighthouse-service
+    actions:
+      - evaluation
+      - evaluate_release
+      - evaluate_remedation
+
+  - name: remediation-service
+    image: keptn/remediation-service
+    actions:
+      - remedation
+
+  - name: wait-service
+    image: keptn/wait-service
+    actions:
+      - real_user_tests
+
+  - name: dynatrace-service
+    image: keptn/dynatrace-service
+    actions:
+      - evaluate_problem_closed

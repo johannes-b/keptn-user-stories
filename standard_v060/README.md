@@ -1,6 +1,6 @@
 # Standard Keptn 0.6.0 User Story
 
-*Last update: 12.02.2020*
+*Last update of shipyard and uniform: 12.02.2020*
 
 This use story shows the standard flow as implemented in Keptn 0.6.0, but based on the new shipyard and uniform specification.
 
@@ -10,13 +10,14 @@ This use story shows the standard flow as implemented in Keptn 0.6.0, but based 
 
 ### Initial situation
 
-No specific setup, normal project setup (e.g., carts and carts-db) with a normal [shipyard.yaml](../0_basics/shipyard.yaml) and [uniform.yaml](../0_basics/shipyard.yaml).
+Normal project setup as shown in [shipyard.yaml](./shipyard.yaml) and tooling is defined in [uniform.yaml](./uniform.yaml).
 
 ### Domain events
 
 Tim, I want to release my new version of the carts service: 
 ```console
-keptn trigger configuration-change --project=sockshop
+keptn trigger configuration-change 
+  --project=sockshop
   --service=carts
   --artifact carts:0.10.1
 ```

@@ -1,5 +1,7 @@
 # Release Brackets
 
+*Last update of shipyard and uniform: 31.01.2020*
+
 As a user, I want to queue services in staging and finally release them together (even in a canary-way)
 
 ## User view
