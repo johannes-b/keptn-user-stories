@@ -3,7 +3,7 @@ type: Uniform
 spec:
   services:
   - name: gitops-service
-    image: keptn/configuration-serive:0.6.0
+    image: keptn/configuration-service:0.6.0
     actions:
       - new-artifact
       - add-resource

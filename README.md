@@ -24,7 +24,7 @@ This repository defines user stories for Keptn. For the user stories a shipyard/
 
 ### Continuous Delivery
 
-- [Canary Release on K8s](canary_k8s/): As a user, I want to do a canary release on K8s
+- [Canary Release on K8s](canary_k8s/): As a user, I want to do a canary release on Kubernetes.
 
 - [Release Brackets](release_brackets/): As a user, I want to queue services in staging and finally release them together (even in a canary-way).
 
@@ -60,11 +60,11 @@ This repository defines user stories for Keptn. For the user stories a shipyard/
 
 - As a user, I want to run Keptn (core) standalone (e.g., using Docker compose)​ 
 
-### Shipyard (Definition of WHAT, Process)
+### Shipyard (Definition of *WHAT*, Process)
 
 - As a user, I want to define custom processes in the shipyard (i.e., approval before deploying to production, tests of dark-deployments, etc.)​
 
-### Uniform (Definition of HOW, Tooling): 
+### Uniform (Definition of *HOW*, Tooling): 
 
 - [Web/Docker Hooks](hooks/): 
   - As a user, I want to register a webhook for a Keptn project, stage, service and action
@@ -85,8 +85,7 @@ This repository defines user stories for Keptn. For the user stories a shipyard/
 - (GitOps) As a user, I want to onboard already deployed services/deployments [on another cluster]​
   - I want to be able to re-create a deployment that Keptn stores in a Git Repo on another cluster (potentially even without needing to install Keptn, just with kubectl apply -f https://github.com/some-user/my-project.git)​
 
-- (GitFlow) ... *TBD* 
-
+- (GitFlow) [Sync Stages](sync_stages/) As a user, I want to sync a stage with the last successfully evaluated configuration of its preceding stage.
 
 ### DevOps - User Experience (Bridge)
 

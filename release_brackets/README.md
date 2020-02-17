@@ -118,7 +118,6 @@ Both, Tim and Tom, expect that their service is deployed in *dev*. Afterwards, b
     - promote.finished
 - configuration-change.finished
 
-
 ### Production stage: the usual workflow
 
 ---

@@ -24,7 +24,7 @@ keptn trigger configuration-change
 
 ### Desired outcome
 
-Tim expects that his service is deployed in *dev* and functional tests are executed. After the test execution, a quality validation is conducted. If the quality validation returns a good result, the new artifact gets deployed in a blue/gree manner into the *hardening* stage where performance tests are executed. If the quality validation in hardening returns a good result, the new version gets promoted into *produciton*. 
+Tim expects that his service is deployed in *dev* and functional tests are executed. After the test execution, a quality validation is conducted. If the quality validation returns a good result, the new artifact gets deployed in a blue/gree manner into the *hardening* stage where performance tests are executed. If the quality validation in hardening returns a good result, the new version gets promoted into *production*. 
 
 ## Event stream
 
@@ -32,7 +32,9 @@ Tim expects that his service is deployed in *dev* and functional tests are execu
 
 *Event stream triggered by Tim:* 
 
-- configuration-change.triggered
+  - configuration-change.triggered
+    
+    - configuration-change.finished  
   - deployment.triggered 
     - deployment.started
     - deployment.finished
@@ -45,7 +47,7 @@ Tim expects that his service is deployed in *dev* and functional tests are execu
   - release.triggered
     - release.started
     - release.finished
-- configuration-change.finished
+
 
 ### CD in Hardening stage
 
