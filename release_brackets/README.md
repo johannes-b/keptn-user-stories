@@ -6,7 +6,7 @@ As a user, I want to queue services in staging and finally release them together
 
 ## User view
 
-:man: *Tim:* I'm a developer and responsible for building the backend service of the app *foo*. I'm individually testing my service in a *dev* environment to investigate bugfixes and new features. 
+:person_with_blond_hair: *Tim:* I'm a developer and responsible for building the backend service of the app *foo*. I'm individually testing my service in a *dev* environment to investigate bugfixes and new features. 
 
 :person_with_blond_hair: *Tom:* I'm a developer and responsible for building the frontend service of the app *foo*. I'm individually testing my service in a *dev* environment to investigate bugfixes and new features. 
 
@@ -30,14 +30,16 @@ As a user, I want to queue services in staging and finally release them together
 
 Tim, I want to release my new version of the backend service: 
 ```console
-keptn trigger configuration-change --project=foo
+keptn trigger configuration-change 
+  --project=foo
   --service=foobar-backend
   --artifact foobar-backend:0.22.3.rc
 ```
 
 Tom, I want to release my new version of the frontend service:
 ```console
-keptn trigger configuration-change --project=foo
+keptn trigger configuration-change 
+  --project=foo
   --service=foobar-frontend
   --artifact foobar-frontend:0.9.42 
 ```

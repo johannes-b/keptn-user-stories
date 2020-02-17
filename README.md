@@ -2,13 +2,15 @@
 
 This repository defines user stories for Keptn. For the user stories a shipyard/uniform describe the Keptn installation. Based on that, the following personas want executed their tasks:
 
-:man: *Tim:* Developer
+:person_with_blond_hair: *Tim:* Developer
 
 :person_with_blond_hair: *Tom:* Developer
 
-:man: *Arnold*: DevOps engineer
+:man: *Arnold*: DevOps engineer (DevSecOps)
 
-:blonde_woman: *Sue*: Acceptance engineer
+:blonde_woman: *Sue*: Acceptance engineer and member of performance engineering team
+
+:woman: *Alice*: TBD
 
 ## Categorization of User Stories
 
@@ -18,7 +20,7 @@ This repository defines user stories for Keptn. For the user stories a shipyard/
 
 **Standard Keptn 0.6.0 Scenario**
 
-- [Keptn_0.6.0](standard_v060/): This use story shows the standard flow as implemented in Keptn 0.6.0.
+- [Keptn 0.6.0 Flow](standard_v060/): This use story shows the standard flow as implemented in Keptn 0.6.0.
 
 ### Continuous Delivery
 
@@ -40,7 +42,13 @@ This repository defines user stories for Keptn. For the user stories a shipyard/
 
 - As a user, I want to get a notification for a problem including data from multiple sources. 
 
-- [Disable Self-healing](disable_self_healing/): As a user, I want to disable self-healing for a certain time period. 
+- [Disable Self-healing](disable_self_healing/): As a user, I want to disable self-healing for a certain time period; when updates are conducted which have an impact on a service's SLOs.
+
+- As a member of DevSecOps, I’d like the offending process restarted or new instance spawned after killing the bad process; when CPU utilization reached a certain threshold and process crashed affecting performance or failure rates increased
+
+- As a member of DevSecOps, I’d like the offending process restarted or new instance spawned after killing the bad process; when memory utilization reached a certain threshold and process crashed affecting performance or failure rates increased
+
+-	As a member of DevSecOps, I’d like disk space increased or a ticket filed to get them increased; when disk space is full and server crashed
 
 ### Platform - Execution Plane:
 
@@ -78,3 +86,10 @@ This repository defines user stories for Keptn. For the user stories a shipyard/
   - I want to be able to re-create a deployment that Keptn stores in a Git Repo on another cluster (potentially even without needing to install Keptn, just with kubectl apply -f https://github.com/some-user/my-project.git)​
 
 - (GitFlow) ... *TBD* 
+
+
+### DevOps - User Experience (Bridge)
+
+- As a member of DevSecOps or performance engineering team, I’d like application performance graphs automatically generated as artifacts.
+
+-	As a member of DevSecOps or performance engineering team, I’d like the ability compare application performance build by build, stage by stage to identify areas of opportunity through deep dive analysis using the artifacts.
