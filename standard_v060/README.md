@@ -1,6 +1,6 @@
 # Standard Keptn 0.6.0 User Story
 
-*Last update of shipyard and uniform: 12.02.2020*
+*Last update of shipyard and uniform: 19.02.2020*
 
 This use story shows the standard flow as implemented in Keptn 0.6.0, but based on the new shipyard and uniform specification.
 
@@ -32,9 +32,10 @@ Tim expects that his service is deployed in *dev* and functional tests are execu
 
 *Event stream triggered by Tim:* 
 
-  - configuration-change.triggered
-    
-    - configuration-change.finished  
+- artifact-delivery.started
+  - update.triggered 
+    - update.started
+    - update.finished
   - deployment.triggered 
     - deployment.started
     - deployment.finished
@@ -47,13 +48,16 @@ Tim expects that his service is deployed in *dev* and functional tests are execu
   - release.triggered
     - release.started
     - release.finished
-
+- artifact-delivery.finished  
 
 ### CD in Hardening stage
 
-*Event stream continued due to promote action in dev:* 
+*Event stream continued due to pull artifact-delivery from dev* 
 
-- configuration-change.triggered
+- artifact-delivery.started
+  - update.triggered 
+    - update.started
+    - update.finished
   - deployment.triggered 
     - deployment.started 
     - deployment.finished
@@ -69,13 +73,13 @@ Tim expects that his service is deployed in *dev* and functional tests are execu
   - release.triggered
     - release.started
     - release.finished
-- configuration-change.finished
+- artifact-delivery.finished  
 
 ### CD in Production stage
 
-*Event stream continued due to promote action in hardening:* 
+*Event stream continued due to configuration change by user:* 
 
-- configuration-change.triggered
+- artifact-delivery.started
   - deployment.triggered 
     - deployment.started 
     - deployment.finished
@@ -91,13 +95,13 @@ Tim expects that his service is deployed in *dev* and functional tests are execu
   - release.triggered
     - release.started
     - release.finished
-- configuration-change.finished
+- artifact-delivery.finished
 
 ### Problem detected
 
 *Event triggered by problem in production:* 
 
-- problem-open.triggered
+- problem-remedation.started
   - remediation.triggered 
     - remediation.started 
     - remediation.finished
@@ -107,4 +111,4 @@ Tim expects that his service is deployed in *dev* and functional tests are execu
   - evaluation.triggered
     - evaluation.started
     - evaluation.finished
-- problem-open.finished
+- problem-remedation.finished

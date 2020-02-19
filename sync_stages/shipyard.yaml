@@ -1,47 +1,47 @@
 ---
-  version: 0.1.1
-  type: Shipyard
-  spec:
-    stages:
-    - name: dev
-      actions:
-        configuration-changed:
-        - deployment:
-            strategy: direct
-        - test:
-            kind: functional
-        - evaluation: 
-        - release: 
+version: 0.1.1
+type: Shipyard
+spec:
+  stages:
+  - name: dev
+    actions:
+      configuration-changed:
+      - deployment:
+          strategy: direct
+      - test:
+          kind: functional
+      - evaluation: 
+      - release: 
 
-    - name: hardening
-      actions:
-        configuration-changed: 
-        - deployment:
-            strategy: blue_green
-        - test:
-            kind: functional
-        - test:
-            kind: performance
-        - evaluation:
-        - release:
+  - name: hardening
+    actions:
+      configuration-changed: 
+      - deployment:
+          strategy: blue_green
+      - test:
+          kind: functional
+      - test:
+          kind: performance
+      - evaluation:
+      - release:
 
-    - name: production
-      actions:
-        configuration-outdated:
-        - update:
-        - deployment:
-            strategy: blue_green
-        - test:
-            kind: functional
-        - evaluation:
-        - approval:
-            pass: automatic
-            warning: manual
-        - release:
+  - name: production
+    actions:
+      configuration-outdated:
+      - update:
+      - deployment:
+          strategy: blue_green
+      - test:
+          kind: functional
+      - evaluation:
+      - approval:
+          pass: automatic
+          warning: manual
+      - release:
 
-        problem-opened:
-        - remediation:
-        - test:
-            kind: real_user
-        - evaluation:
+      problem-opened:
+      - remediation:
+      - test:
+          kind: real_user
+      - evaluation:
   

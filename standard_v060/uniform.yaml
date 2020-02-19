@@ -1,37 +1,47 @@
-version: 0.1.1
+---
+version: 0.1.2
 type: Uniform
 spec:
   services:
+  - name: update-service
+    image: keptn/helm-service:0.6.0
+    events:
+      - update.triggered
+
   - name: deployment-service
     image: keptn/helm-service:0.6.0
-    actions:
-      - deployment
-    selector:
-      matchExpressions:
-        - {key: strategy, operator: In, values: [direct, blue_green]}
+    events:
+      - deployment.triggered:
+        selector:
+          matchExpressions:
+            - {key: strategy, operator: In, values: [direct, blue_green]}
+      - artifact-delivery.finished:
+        selector:
+          matchLabels:
+            result: failed
         
   - name: jmeter-service
     image: keptn/jmeter-service:0.6.0 
-    actions:
-      - test
+    events:
+      - test.triggered
     selector:
       matchExpressions:
         - {key: kind, operator: In, values: [functional, performance]}
 
   - name: evaluation-service
     image: keptn/lighthouse-service:0.6.0
-    actions:
-      - evaluation
+    events:
+      - evaluation.triggered
 
   - name: promote-service
     image: keptn/gatekeeper-service:0.6.0
-    actions:
-      - release
+    events:
+      - release.triggered
 
   - name: approval-service
     image: keptn/notification-service:0.1.4
-    actions:
-      - approval
+    events:
+      - approval.triggered
     selector:
       matchLabels:
         pass: automatic
@@ -39,13 +49,13 @@ spec:
 
   - name: remedation-service
     image: keptn/remedation-service:0.6.0
-    actions:
-      - remediation
+    events:
+      - remediation.triggered
     
   - name: wait-service
     image: keptn/wait-service:0.6.0 
-    actions:
-      - test
+    events:
+      - test.triggered
     selector:
       matchExpressions:
         - {key: kind, operator: In, values: [real_user]} 
