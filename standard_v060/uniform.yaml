@@ -15,7 +15,6 @@ spec:
         selector:
           matchExpressions:
             - {key: strategy, operator: In, values: [direct, blue_green]}
-#      - rollback-deployment.triggered:
 
   - name: jmeter-service
     image: keptn/jmeter-service:0.6.0 

@@ -1,6 +1,6 @@
 # Canary
 
-*Last update of shipyard and uniform: 31.01.2020*
+*Last update of shipyard and uniform: 24.02.2020*
 
 ## User view
 
@@ -18,40 +18,64 @@
 
 ### Production stage:
 
-*Event stream triggered by Configuration change for production:* 
-- configuration-change.triggered
-  - deploy_blue_green.triggered 
-    - deploy_blue_green.started 
-    - deploy_blue_green.finished
-  - functional_tests.triggered
-    - functional_tests.started
-    - functional_tests.finished
+*Event stream triggered by: hardening.artifact-delivery.finished:* 
+
+- deployment.started
+  - update.triggered 
+    - update.started
+    - update.finished
+  - deployment.triggered 
+    - deployment.started 
+    - deployment.finished
+  - test.triggered
+    - test.started
+    - test.finished
   - evaluation.triggered
-    - evaluation.started  
+    - evaluation.started
     - evaluation.finished
-  - manual_approval.triggered
-    - manual_approval.started
-    - manual_approval.finished
-  - release_canary.triggered
-    - release_canary.started    
-    - release_canary.progressed # set 10% of traffic to canary
-  - real_user_tests.triggered
-    - real_user_tests.started
-    - real_user_tests.finished
-  - evaluate_release.triggered
-    - evaluate_release.started
-    - evaluate_release.finished
-  - release_canary.retriggerd
-    - release_canary.progressed # set 20% of traffic to canary
-  - real_user_tests.triggered
-    - real_user_tests.started
-    - real_user_tests.finished
-  - evaluate_release.triggered
-    - evaluate_release.started
-    - evaluate_release.finished 
-  - release_canary.retriggerd
-    - release_canary.finished
-- configuration-change.done
+- deployment.finished
 
----
+- release.started
+  - approval.triggered
+    - approval.started
+    - approval.finished
+  - traffic_shift.triggered
+    - traffic_shift.started    
+    - traffic_shift.in-progress    # set 50% of traffic to canary
+- release.in-progress
 
+- release_validation.started
+  - test.triggered
+    - test.started
+    - test.finished
+  - evaluation.triggered
+    - evaluation.started
+    - evaluation.finished
+- release_validation.finished
+
+- release.started
+  - approval.triggered
+    - approval.started
+    - approval.finished
+  - traffic_shift.triggered
+    - traffic_shift.started    
+    - traffic_shift.in-progress    # set 100% of traffic to canary
+- release.in-progress
+
+- release_validation.started
+  - test.triggered
+    - test.started
+    - test.finished
+  - evaluation.triggered
+    - evaluation.started
+    - evaluation.finished
+- release_validation.finished
+
+- release.started
+  - approval.triggered
+    - approval.started
+    - approval.finished
+  - traffic_shift.triggered
+    - traffic_shift.started    
+    - traffic_shift.finished   # done
+- release.finished

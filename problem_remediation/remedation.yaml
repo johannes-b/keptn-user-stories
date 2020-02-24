@@ -6,6 +6,7 @@ remediations:
     - action: restart_pods
       value: all
     - action: rollback
+    
   - name: "Failure rate increase"
     actions:
     - action: featuretoggle

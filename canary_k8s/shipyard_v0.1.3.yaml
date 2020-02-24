@@ -1,0 +1,93 @@
+---
+  version: 0.1.3
+  type: Shipyard
+  spec:  
+    stages:
+    - name: "dev"
+      workflows:
+        artifact-delivery:
+          listen:
+            - dev.artifact.available
+          tasks:
+            - update:
+            - deployment:
+                strategy: direct
+            - test:
+                kind: functional
+            - evaluation:
+            - release:
+           
+    - name: "hardening"
+      workflows:
+        artifact-delivery: 
+          listen:
+            - dev.artifact-delivery.finished
+          tasks:
+          - update:
+          - deployment:
+              strategy: blue_green
+          - test:
+              kind: functional
+          - test:
+              kind: performance
+          - evaluation:
+          - release:          
+  
+    - name: "production"
+      workflows:
+        ## Deployment workflow
+        deployment: 
+          listen:
+          - hardening.artifact-delivery.finished
+          tasks:
+          - update:
+          - deployment:
+              strategy: blue_green
+          - test:
+              kind: functional
+          - evaluation:     
+              maxWait: 60m
+        
+        ## Release + Release validation workflows
+        release:
+          listen:
+          - production.deployment.finished
+          - production.release_validation.finished
+          tasks:
+          - approval:
+              pass: automatic
+              warning: manual  
+          - traffic_shift:
+              strategy: canary
+        
+        release_validation:
+          listen:
+          - production.release.in-progress
+          tasks: 
+          - test:
+              kind: real_user
+          - evaluation:
+        
+        ## Rollback workflow
+        rollback:
+          listen:
+          - production.deployment.finished:
+              conditions:
+                condition: 
+                - status=failed
+          - production.release.finished:
+              conditions:
+                condition: 
+                  - status=failed
+          tasks:
+          - rollback
+
+        ## Escalate workflow
+        escalate_failed_deployments:
+          listen:
+          - "*.finished":
+            condition:
+              - status=failed
+          tasks:
+            - notify:
+            - escalate:

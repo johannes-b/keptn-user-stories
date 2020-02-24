@@ -1,0 +1,37 @@
+---
+  version: 0.1.3
+  type: Shipyard
+  spec:  
+ 
+    ### dev and hardening are out of context   
+  
+    - name: "production"
+      workflows:
+        artifact-delivery: 
+          listen:
+          - hardening.artifact-delivery.finished
+          tasks:
+          - update:
+          - deployment:
+              strategy: blue_green
+          - test:
+              kind: functional
+          - evaluation:
+          - approval:
+          - release:
+        
+        remediation:
+          listen: 
+          - production.problem.open
+          - production.remediation_validation.finished
+          tasks:
+          - approval:
+          - remediation:
+
+        remediation_validation:
+          listen: 
+          - production.remediation.in-progress
+          tasks:
+          - test:
+              kind: real_user
+          - evaluation:

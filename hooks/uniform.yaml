@@ -1,0 +1,20 @@
+---
+version: 0.1.2
+type: Uniform
+spec:
+  services:
+
+  - name: web-hook
+    hook: https://some-host.com/hook/me/up/
+    events:
+      - release.triggered
+
+  - name: approval-service
+    image: docker.io/myusername/my-test-image:1.5.77
+    events:
+      - test.triggered
+    selector:
+      matchLabels:
+        stage: hardening
+
+

@@ -1,0 +1,40 @@
+---
+  version: 0.1.2
+  type: Shipyard
+  spec:  
+    stages:
+
+      ### dev, hardening are out of context    
+  
+    - name: "production"
+      pull:
+      - artifact-delivery
+      workflows:
+        artifact-delivery: 
+        - update:
+        - deployment:
+            strategy: blue_green
+        - test:
+            kind: functional 
+        - evaluation:     
+        - approval:
+            pass: automatic
+            warning: manual  
+        - release:
+            strategy: canary
+            workflow:
+              release.progressed: 
+              - test:
+                  kind: real_user
+              - evaluation:
+  
+        problem-remediation:
+          - approval:
+          - remediation:
+            workflow: 
+              remediation.progressed:
+              - test:
+                  kind: real_user
+              - evaluation:
+              - approval:
+          - escalate:

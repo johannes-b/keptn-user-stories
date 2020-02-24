@@ -4,8 +4,8 @@ type: Shipyard
 spec:
   stages:
   - name: dev
-    actions:
-      configuration-changed:
+    workflows:
+      artifact-delivery:
       - deployment:
           strategy: direct
       - test:
@@ -14,8 +14,8 @@ spec:
       - release: 
 
   - name: hardening
-    actions:
-      configuration-changed: 
+    workflows:
+      artifact-delivery: 
       - deployment:
           strategy: blue_green
       - test:
@@ -26,8 +26,8 @@ spec:
       - release:
 
   - name: production
-    actions:
-      configuration-outdated:
+    workflows:
+      artifact-delivery:
       - update:
       - deployment:
           strategy: blue_green
@@ -39,7 +39,7 @@ spec:
           warning: manual
       - release:
 
-      problem-opened:
+      problem-remediation:
       - remediation:
       - test:
           kind: real_user

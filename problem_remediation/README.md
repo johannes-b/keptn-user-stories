@@ -1,6 +1,6 @@
 # Problem Remediation
 
-*Last update of shipyard and uniform: 31.01.2020*
+*Last update of shipyard and uniform: 24.02.2020*
 
 As a user, I want to define a custom remediation workflow with multiple actions.
 
@@ -29,34 +29,40 @@ As a user, I want to define a custom remediation workflow with multiple actions.
 
 *Domain event source:* Monitoring solution (e.g., Dynatrace)
 
-
-
 ### Desired outcome
-
 
 ## Event stream
 
 ### Production stage:
 
 *Event stream triggered by Domain event source (Dynatrace):* 
-- problem-open.triggered
+- problem-remediation.triggered
+  - approval.triggered
+    - approval.started
+    - approval.finished
   - remedation.triggered 
     - remedation.started 
     - remedation.progressed     # Execute 1st action
-  - real_user_tests.triggered
-    - real_user_tests.started
-    - real_user_tests.finished
-  - evaluate_remedation.triggered
-    - evaluate_remedation.started  
-    - evaluate_release.finished
+  - test.triggered
+    - test.started
+    - test.finished
+  - evaluation.triggered
+    - evaluation.started  
+    - evaluation.finished
+  - approval.triggered
+    - approval.started
+    - approval.finished 
   - remedation.retriggered
     - remedation.progressed     # Execute 2nd action
-  - real_user_tests.triggered
-    - real_user_tests.started
-    - real_user_tests.finished
-  - evaluate_remedation.triggered
-    - evaluate_remedation.started  
-    - evaluate_release.finished
+  - test.triggered
+    - test.started
+    - test.finished
+  - evaluation.triggered
+    - evaluation.started  
+    - evaluation.finished
+  - approval.triggered
+    - approval.started
+    - approval.finished 
   - remedation.retriggered
     - remedation.finished
   - escalate.triggerred

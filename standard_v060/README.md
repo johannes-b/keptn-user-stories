@@ -107,7 +107,7 @@ Tim expects that the service is deployed in *dev* and functional tests are execu
 
 *Event triggered by problem in production:* 
 
-- problem-remedation.started
+- problem-remediation.started
   - remediation.triggered 
     - remediation.started 
     - remediation.finished
@@ -117,4 +117,4 @@ Tim expects that the service is deployed in *dev* and functional tests are execu
   - evaluation.triggered
     - evaluation.started
     - evaluation.finished
-- problem-remedation.finished
+- problem-remediation.finished

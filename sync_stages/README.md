@@ -31,6 +31,7 @@ Sue, checks the status of the *hardening* stage:
 ```console
 keptn view status --stage=hardening --project=sockshop
 ```
+
 ```
 > Released services in hardening:
 - carts:0.10.1
@@ -52,6 +53,7 @@ Last successfully evaluated configuration:
 ```
 
 Sue, I want to trigger the synchronization of *hardening* with *dev*: 
+
 ```console
 keptn trigger artifact-delivery 
   --project=foo
