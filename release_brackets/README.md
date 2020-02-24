@@ -1,6 +1,6 @@
 # Release Brackets
 
-*Last update of shipyard and uniform: 31.01.2020*
+*Last update of shipyard and uniform: 20.02.2020*
 
 As a user, I want to queue services in staging and finally release them together (even in a canary-way)
 
@@ -23,35 +23,34 @@ As a user, I want to queue services in staging and finally release them together
 - hardening: For performance tests of a set of microservices
 - production: Is out of scope for these users (Tim & Tom). Does not matter, just needs to work.
 
-*Shipyard:* (compared to default)
-- Dev stage has no promote action (Tim and Tom send a configuration-change for the next stage manually)
-
 ### Domain events: Tim and Tom send a new artifact at the same time
 
 Tim, I want to release my new version of the backend service: 
+
 ```console
-keptn trigger configuration-change 
+keptn send new-artifact 
   --project=foo
   --service=foobar-backend
-  --artifact foobar-backend:0.22.3.rc
+  --artifact=foobar-backend:0.22.3.rc
 ```
 
 Tom, I want to release my new version of the frontend service:
+
 ```console
-keptn trigger configuration-change 
+keptn send new-artifact 
   --project=foo
   --service=foobar-frontend
-  --artifact foobar-frontend:0.9.42 
+  --artifact=foobar-frontend:0.9.42 
 ```
 
 Tim & Tom meet for a coffee and decide to push their latest artifacts to hardening (for their performance tests): 
 
 ```console
-keptn trigger configuration-change --project=foo --stage=hardening
+keptn send new-artifact --project=foo --stage=hardening
   --service=foobar-frontend
   --artifact foobar-backend:0.22.3.rc 
   --service=foobar-frontend
-  --artifact foobar-frontend:0.9.42 
+  --artifact=foobar-frontend:0.9.42 
 ```
 
 </p>
@@ -66,57 +65,69 @@ Both, Tim and Tom, expect that their service is deployed in *dev*. Afterwards, b
 ### Dev stage:
 
 *Event stream triggered by Tim:* 
-- configuration-change.triggered
-  - deploy_direct.triggered # shipyard controller
-    - deploy_direct.started # Keptn service
-    - deploy_direct.finished
-  - functional_tests.triggered
-    - functional_tests.started
-    - functional_tests.finished
+
+- artifact-delivery.started
+  - update.triggered 
+    - update.started
+    - update.finished
+  - deployment.triggered 
+    - deployment.started
+    - deployment.finished
+  - test.triggered
+    - test.started
+    - test.finished
   - evaluation.triggered
     - evaluation.started
     - evaluation.finished
   - release.triggered
     - release.started
     - release.finished
-- configuration-change.finished
+- artifact-delivery.finished 
 
 *Event stream triggered by Tom:* 
-- configuration-change.triggered
-  - deploy_direct.triggered 
-    - deploy_direct.started 
-    - deploy_direct.finished
-  - functional_tests.triggered
-    - functional_tests.started
-    - functional_tests.finished
+
+- artifact-delivery.started
+  - update.triggered 
+    - update.started
+    - update.finished
+  - deployment.triggered 
+    - deployment.started
+    - deployment.finished
+  - test.triggered
+    - test.started
+    - test.finished
   - evaluation.triggered
     - evaluation.started
     - evaluation.finished
   - release.triggered
     - release.started
     - release.finished
-- configuration-change.finished
+- artifact-delivery.finished 
 
 ### Hardening stage
 
 *Event stream triggered by Tom & Tim:*
-- configuration-change.triggered
-  - deploy_blue_green.triggered 
-    - deploy_blue_green.started 
-    - deploy_blue_green.finished
-  - performance_tests.triggered
-    - performance_tests.started
-    - performance_tests.finished
+
+- artifact-delivery.started
+  - update.triggered 
+    - update.started
+    - update.finished
+  - deployment.triggered 
+    - deployment.started
+    - deployment.finished
+  - test.triggered
+    - test.started
+    - test.finished
+  - test.triggered
+    - test.started
+    - test.finished
   - evaluation.triggered
     - evaluation.started
     - evaluation.finished
   - release.triggered
     - release.started
     - release.finished
-  - promote.triggered
-    - promote.started
-    - promote.finished
-- configuration-change.finished
+- artifact-delivery.finished 
 
 ### Production stage: the usual workflow
 

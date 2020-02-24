@@ -13,6 +13,10 @@ spec:
           kind: functional
       - evaluation:
       - release:
+
+#      rollback:
+#        pull: artifact-delivery.finshed | result: failed
+#        - rollback-deployment:
         
   - name: "hardening"
     pull:
@@ -30,8 +34,11 @@ spec:
       - release:          
 
   - name: "production"
+    pull:
+    - artifact-delivery
     workflows:
-      artifact-delivery:
+      artifact-delivery: 
+      - update:
       - deployment:
           strategy: blue_green
       - test:
@@ -42,8 +49,8 @@ spec:
           warning: manual  
       - release:
 
-      problem-remedation:
+      problem-remediation:
         - remediation:
         - test:
-            kind: real_user 
+            kind: real_user
         - evaluation:

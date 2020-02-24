@@ -1,0 +1,28 @@
+---
+version: 0.1.2
+type: Shipyard
+spec:  
+  stages:
+  - name: "dev"
+    workflows:
+      artifact-delivery:
+      - update:
+      - deployment:
+          strategy: direct
+      - test:
+          kind: functional
+      - evaluation:
+      - release:
+        
+  - name: "hardening"
+    pull:
+    - artifact-delivery
+    workflows:
+      artifact-delivery: 
+      - update:
+      - deployment:
+          strategy: blue_green
+      - test:
+          kind: performance
+      - evaluation:
+      - release:          

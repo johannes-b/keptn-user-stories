@@ -1,35 +1,30 @@
-version: 0.1.0
-type: Shipyard
-spec:
-  stages:
+---
+  version: 0.1.2
+  type: Shipyard
+  spec:  
+    stages:
     - name: "dev"
-      actions:
-        configuration-change:
-          - deploy_direct
-          - functional_tests
-          - evaluation
-          - release         # = direct deployment, do nothing
-
+      workflows:
+        artifact-delivery:
+        - update:
+        - deployment:
+            strategy: direct
+        - test:
+            kind: functional
+        - evaluation:
+        - release:
+      
     - name: "hardening"
-      actions:
-        configuration-change:
-          - deploy_blue_green
-          - performance_tests
-          - evaluation
-          - release          # = traffic shift to new deployment
-          - promote   # ask if next stage should be exec.
+      workflows:
+        artifact-delivery:
+        - update: 
+        - deployment:
+            strategy: blue_green
+        - test:
+            kind: functional
+        - test:
+            kind: performance
+        - evaluation:
+        - release:          
 
-    - name: "production"
-      actions:
-        configuration-change:
-          - deploy_blue_green
-          - functional_tests # = test new deployment
-          - evaluation       # evaluate tests
-          - manual_approval  
-          - release          # = traffic shift to new deployment
-          - evaluate_release
-
-        problem-open:
-          - remediate
-          - real_user_tests
-          - evaluate_release
+##  - name: "production" out-of-scope

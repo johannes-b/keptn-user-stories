@@ -15,11 +15,8 @@ spec:
         selector:
           matchExpressions:
             - {key: strategy, operator: In, values: [direct, blue_green]}
-      - artifact-delivery.finished:
-        selector:
-          matchLabels:
-            result: failed
-        
+#      - rollback-deployment.triggered:
+
   - name: jmeter-service
     image: keptn/jmeter-service:0.6.0 
     events:

@@ -29,7 +29,7 @@ Normal project setup as shown in [shipyard.yaml](./shipyard.yaml) and tooling is
 Sue, checks the status of the *hardening* stage: 
 
 ```console
-keptn view status --stage=production --project=sockshop
+keptn view status --stage=hardening --project=sockshop
 ```
 ```
 > Released services in hardening:
@@ -46,14 +46,14 @@ Last successfully evaluated configuration:
 - carts-db:0.4.1
 - catalogue:1.7.0
 
-> Execute: `keptn trigger configuration-change --project=foo --stage=hardening` to update: 
+> Execute: `keptn trigger artifact-delivery --project=foo --stage=hardening` to update: 
 - carts:0.10.1 --> carts:0.10.17
 - carts-db:0.4.0 --> carts-db:0.4.1
 ```
 
 Sue, I want to trigger the synchronization of *hardening* with *dev*: 
 ```console
-keptn trigger configuration-change 
+keptn trigger artifact-delivery 
   --project=foo
   --stage=hardening
   (--from=dev         # smart default: per default always a synchronization with the preceding stage)  
