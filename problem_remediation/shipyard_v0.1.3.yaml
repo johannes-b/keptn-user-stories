@@ -22,16 +22,13 @@
         
         remediation:
           listen: 
-          - production.problem.open
-          - production.remediation_validation.finished
+          - production.problem.open (default)
+          - production.remediation.in-progress (default)
           tasks:
           - approval:
+              kind: manual
           - remediation:
-
-        remediation_validation:
-          listen: 
-          - production.remediation.in-progress
-          tasks:
-          - test:
+          - validation:
               kind: real_user
-          - evaluation:
+
+        

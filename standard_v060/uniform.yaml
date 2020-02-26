@@ -37,13 +37,13 @@ spec:
   - name: approval-service
     image: keptn/notification-service:0.1.4
     events:
-      - approval.triggered
-    selector:
-      matchLabels:
-        pass: automatic
-        warning: manual
+      - approval.triggered:
+        selector:
+          matchLabels:
+            pass: automatic
+            warning: manual
 
-  - name: remedation-service
+  - name: remediation-service
     image: keptn/remedation-service:0.6.0
     events:
       - remediation.triggered

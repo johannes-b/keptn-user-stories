@@ -1,39 +1,38 @@
 ---
-  version: 0.1.3
-  type: Shipyard
-  spec:  
-    stages:
-    - name: "dev"
-      workflows:
-        artifact-delivery:
-          listen:
-            - dev.artifact.available
-          tasks:
-            - update:
-            - deployment:
-                strategy: direct
-            - test:
-                kind: functional
-            - evaluation:
-            - release:
-           
-    - name: "hardening"
-      workflows:
-        artifact-delivery: 
-          listen:
-            - dev.artifact-delivery.finished
-          tasks:
+version: 0.1.3
+type: Shipyard
+spec:  
+  stages:
+  - name: "dev"
+    workflows:
+      artifact-delivery:
+        tasks:
           - update:
           - deployment:
-              strategy: blue_green
+              strategy: direct
           - test:
               kind: functional
-          - test:
-              kind: performance
           - evaluation:
-          - release:          
-  
-    - name: "production"
+          - release:
+          
+  - name: "hardening"
+    workflows:
+      artifact-delivery: 
+        listen:   # from
+          - dev.artifact-delivery.finished
+        tasks:
+        - update:
+        - deployment:
+            strategy: blue_green
+        - test:
+            kind: functional
+        - evaluation: 
+        - test:
+            kind: performance
+        - evaluation:
+        - release:          
+
+  - name: "production"
       workflows:
         ## Deployment workflow
         deployment: 
@@ -45,8 +44,9 @@
               strategy: blue_green
           - test:
               kind: functional
-          - evaluation:     
-              maxWait: 60m
+          - evaluation:
+          - release:
+              stratgy: canary
         
         ## Release + Release validation workflows
         release:
