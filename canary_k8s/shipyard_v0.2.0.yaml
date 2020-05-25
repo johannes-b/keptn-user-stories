@@ -7,19 +7,19 @@ spec:
     workflows:
       artifact-delivery:
         tasks:
-          - update:
-          - deployment:
-              strategy: direct
-          - test:
-              kind: functional
-          - evaluation:
-          - release:
+        - update:
+        - deployment:
+            strategy: direct
+        - test:
+            kind: functional
+        - evaluation:
+        - release:
           
   - name: "hardening"
     workflows:
       artifact-delivery: 
         listen:   # from
-          - dev.artifact-delivery.finished
+        - dev.artifact-delivery.finished
         tasks:
         - update:
         - deployment:
@@ -78,7 +78,7 @@ spec:
         - production.release.finished:
             conditions:
               condition: 
-                - status=failed
+              - status=failed
         tasks:
         - rollback
 
