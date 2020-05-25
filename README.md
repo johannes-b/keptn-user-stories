@@ -14,8 +14,6 @@ This repository defines user stories for Keptn. For the user stories a shipyard/
 
 ## Categorization of User Stories
 
-<img src="_images/overview.png" width="50%"/>
-
 ## User Stories
 
 **Standard Keptn 0.6.0 Scenario**
